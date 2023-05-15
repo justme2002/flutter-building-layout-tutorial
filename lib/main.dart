@@ -156,17 +156,50 @@ class TitleWidget extends StatelessWidget {
               )
             ],
           ),
-          const Row(
-            children: [
-              Icon(
-                Icons.star, 
-                color: Colors.amber
-              ),
-              Text("41")
-            ],
-          )
+          const FavoriteWidget()
         ],
       ),
+    );
+  }
+}
+
+class FavoriteWidget extends StatefulWidget {
+  const FavoriteWidget({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _FavoriteWidgetState();
+}
+
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+
+  bool _isFavorite = false;
+  int _favoriteCount = 41;
+
+  _FavoriteWidgetState();
+
+  void isFavoriteHandler() {
+    setState(() {
+      _isFavorite = !_isFavorite;
+      if (_isFavorite == false) {
+        _favoriteCount -= 1;
+      } else {
+        _favoriteCount += 1;
+      }
+    });
+    
+    print(_favoriteCount);
+  }
+    
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        IconButton(
+          onPressed: isFavoriteHandler,
+          icon: (_isFavorite == false ? const Icon(Icons.star_outline) : const Icon(Icons.star)),
+        ),
+        Text('$_favoriteCount')
+      ],
     );
   }
 }
